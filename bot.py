@@ -1,7 +1,7 @@
+import os
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-import os
 
 # Включаем логирование
 logging.basicConfig(
@@ -9,19 +9,23 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-# Команда /start
+# Обработчик команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Привет! Я простой эхо-бот. Напиши что-нибудь!')
+    await update.message.reply_text('Привет!')
 
-# Эхо-обработчик
+# Обработчик любого текстового сообщения
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(update.message.text)
+    await update.message.reply_text('привет')
 
-# Основная функция
+# Основная функция запуска бота
 def main():
-   
+    # Получаем токен из переменной окружения
+    token = os.getenv('TELEGRAM_BOT_TOKEN')
+    if not token:
+        raise ValueError("Переменная окружения TELEGRAM_BOT_TOKEN не установлена")
+
     # Создаём приложение
-    application = Application.builder().token(os.environ.get('BOT_TOKEN')).build()
+    application = Application.builder().token(token).build()
 
     # Регистрируем обработчики
     application.add_handler(CommandHandler("start", start))
