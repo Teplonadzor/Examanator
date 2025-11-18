@@ -1,6 +1,7 @@
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+import os
 
 # Включаем логирование
 logging.basicConfig(
@@ -18,11 +19,11 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Основная функция
 def main():
-    # Вставь сюда токен от @BotFather
-    # TOKEN = "YOUR_BOT_TOKEN_HERE"
 
+    TOKEN = os.environ.get('BOT_TOKEN')
+    
     # Создаём приложение
-    application = Application.builder().token(BOT_TOKEN).build()
+    application = Application.builder().token(TOKEN).build()
 
     # Регистрируем обработчики
     application.add_handler(CommandHandler("start", start))
