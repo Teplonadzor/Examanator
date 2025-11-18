@@ -22,7 +22,7 @@ def main():
     # TOKEN = "YOUR_BOT_TOKEN_HERE"
 
     # Создаём приложение
-    application = Application.builder().token(TOKEN).build()
+    application = Application.builder().token(BOT_TOKEN).build()
 
     # Регистрируем обработчики
     application.add_handler(CommandHandler("start", start))
