@@ -14,7 +14,7 @@ async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(update.message.text)
 
 def main():
-    TOKEN = "YOUR_BOT_TOKEN_HERE"  # ← замените на ваш токен
+    TOKEN = "8539034214:AAHdiwYT5vKCnUYrBxcgGK7VFYUX8znWqIY"  # ← замените на ваш токен
 
     application = Application.builder().token(TOKEN).build()
     application.add_handler(CommandHandler("start", start))
