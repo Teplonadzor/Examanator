@@ -1,20 +1,35 @@
-import telebot
-import os
-from dotenv import load_dotenv
+import logging
+from telegram import Update
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
-load_dotenv()  # Загружает .env файл
-# Создаем экземпляр бота
-bot = telebot.TeleBot(os.getenv('BOT_TOKEN'))
+# Включаем логирование
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
 
-# Функция, обрабатывающая команду /start
-@bot.message_handler(commands=["start"])
-def start(m, res=False):
-    bot.send_message(m.chat.id, 'Я на связи. Напиши мне что-нибудь )')
-    
-# Получение сообщений от юзера
-@bot.message_handler(content_types=["text"])
-def handle_text(message):
-    bot.send_message(message.chat.id, 'Вы написали: ' + message.text)
-    
-# Запускаем бота
-bot.polling(none_stop=True, interval=0)
+# Команда /start
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text('Привет! Я простой эхо-бот. Напиши что-нибудь!')
+
+# Эхо-обработчик
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(update.message.text)
+
+# Основная функция
+def main():
+    # Вставь сюда токен от @BotFather
+    # TOKEN = "YOUR_BOT_TOKEN_HERE"
+
+    # Создаём приложение
+    application = Application.builder().token(TOKEN).build()
+
+    # Регистрируем обработчики
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
+
+    # Запускаем бота
+    application.run_polling()
+
+if __name__ == '__main__':
+    main()
