@@ -1,6 +1,8 @@
 import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+import os
+from dotenv import load_dotenv
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -13,9 +15,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(update.message.text)
 
-def main():
-    TOKEN = "8539034214:AAHdiwYT5vKCnUYrBxcgGK7VFYUX8znWqIY"  # ← замените на ваш токен
 
+
+def main():
+    load_dotenv()  # Загружает переменные из .env
+    TOKEN = os.getenv('BOT_TOKEN')
     application = Application.builder().token(TOKEN).build()
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
