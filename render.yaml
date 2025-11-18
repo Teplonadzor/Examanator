@@ -1,0 +1,19 @@
+# Exported from Render on 2025-11-18T15:42:59Z
+version: "1"
+projects:
+- name: My project
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: Examanator
+      runtime: python
+      repo: https://github.com/Teplonadzor/Examanator
+      plan: free
+      envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      region: oregon
+      buildCommand: pip install -r requirements.txt
+      startCommand: python bot.py
+      autoDeployTrigger: "off"
