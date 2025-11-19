@@ -3,6 +3,8 @@ import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
+import random
+
 # Включаем логирование
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -13,9 +15,24 @@ logging.basicConfig(
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text('Привет!')
 
+# Список из 10 возможных ответов
+RESPONSES = [
+    "чево?",
+    "да, скорее всего",
+    "не могу знать",
+    "вот так и живем",
+    "добро",
+    "ничего не понятно",
+    "охайо!",
+    "рад тебя видеть!",
+    "кринжатина",
+    "салют!"
+]
+
 # Обработчик любого текстового сообщения
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('привет')
+    response = random.choice(RESPONSES)
+    await update.message.reply_text(response)
 
 # Основная функция запуска бота
 def main():
