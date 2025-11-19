@@ -1,9 +1,8 @@
 import os
 import logging
+import random
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-
-import random
 
 # Включаем логирование
 logging.basicConfig(
